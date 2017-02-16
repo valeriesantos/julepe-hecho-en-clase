@@ -95,7 +95,6 @@ public class Juego
         return paloQuePinta;           
     }
 
-
     /**
      * Devuelve la posición del jugador cuyo nombre se especifica como
      * parámetro.
@@ -139,15 +138,52 @@ public class Juego
      *    bazas) o "no es julepe".
      *
      */
-    private void jugar()
+    public void jugar()
     {
 
-    }    
+        repartir(); //Repartir cartas
+        Scanner sc = new Scanner(System.in);
+        int  i = 5;
+        while (i != 0) {
+            System.out.println("ESTAS SON TUS CARTAS:");
+
+            jugadores[0].verCartasJugador();
+            System.out.println("¿Que carta desea tirar?");
+            String cartaQueQuieroTirar = sc.nextLine();
+
+            Carta cartaQueNoTengo = jugadores[0].tirarCarta(cartaQueQuieroTirar);
+
+            while (cartaQueNoTengo == null){
+                System.out.println("Por favor, introduce una carta que tengas"); // Imprime mensaje de error.
+                cartaQueQuieroTirar = sc.nextLine();
+                cartaQueNoTengo = jugadores[0].tirarCarta(cartaQueQuieroTirar);
+            }    
+
+            Baza baza = new Baza(jugadores.length, paloQuePinta);
+            baza.addCarta(cartaQueNoTengo, jugadores[0].getNombre());
+
+            for(int posicion = 1; posicion < jugadores.length; posicion++){
+                Carta cartaBots = jugadores[posicion].tirarCartaAleatoria();
+                baza.addCarta(cartaBots, jugadores[posicion].getNombre());
+            }
+
+            Carta cartaGanadora = baza.cartaQueVaGanandoLaBaza();
+            String jugadorQueVaGanando = baza.nombreJugadorQueVaGanandoLaBaza();
+
+            jugadores[encontrarPosicionJugadorPorNombre(jugadorQueVaGanando)].addBaza(baza);
+            System.out.println("Va ganando la baza : "  + jugadorQueVaGanando.toUpperCase());
+            i--;
+        }
+        int bazasGanadasHumano = jugadores[0].getNumeroBazasGanadas();      
+        System.out.println("HAS GANADO :  " + bazasGanadasHumano + " BAZAS");
+
+        if(bazasGanadasHumano < 2){
+            System.out.println("ERES JULEPE");
+
+        }
+        else{
+            System.out.println("NO ERES JULEPE");
+
+        }
+    }
 }
-
-
-
-
-
-
-
