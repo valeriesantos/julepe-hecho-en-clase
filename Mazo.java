@@ -10,6 +10,7 @@ public class Mazo
 {
 
     private ArrayList<Carta> mazo;
+    private Carta valorCarta;
 
     /**
      * Constructor for objects of class Mazo
@@ -18,14 +19,21 @@ public class Mazo
     {
         mazo = new ArrayList<Carta>();
 
-        for (int paloActual = 0; paloActual < 4; paloActual++) {
+        Palo[] palosEnum; //guardamos en un array los palos 
+        palosEnum = Palo.values();// devuelve un array que contiende los enum
+        Palo paloEnum = null; //cambio de -1 a null;
+        for (int paloActual = 0; paloActual < palosEnum.length; paloActual++) {
             for (int valorActual = 1; valorActual <= 12; valorActual++) {
                 if (valorActual != 8 && valorActual != 9) {
-                    mazo.add(new Carta(valorActual, paloActual));
+
+                    mazo.add(new Carta(valorActual, palosEnum[paloActual]));
+
+
                 }
             }          
         }
 
+    
     }
 
     public void verCartasDelMazo()
@@ -46,8 +54,7 @@ public class Mazo
         }
 
     }
-    
-    
+
     public Carta sacarCarta()
     {        
         Carta cartaADevolver = null;
@@ -58,10 +65,6 @@ public class Mazo
     }
 
 }
-
-
-
-
 
 
 

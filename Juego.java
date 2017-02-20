@@ -11,7 +11,7 @@ public class Juego
 {
     private Jugador[] jugadores;
     private Mazo mazo;
-    private int paloQuePinta;
+    private Palo paloQuePinta;
 
     /**
      * Constructor de la clase Juego
@@ -64,7 +64,7 @@ public class Juego
      *
      * @return El palo que pinta tras repartir
      */
-    private int repartir() 
+    private Palo repartir() 
     {
         mazo.barajar();
 
@@ -77,20 +77,7 @@ public class Juego
         }
 
         paloQuePinta = nuevaCarta.getPalo();
-        switch (paloQuePinta) {
-            case 0:
-            System.out.println("Pintan oros");
-            break;
-            case 1:
-            System.out.println("Pintan copas");
-            break;
-            case 2:
-            System.out.println("Pintan espadas");
-            break;
-            case 3:
-            System.out.println("Pintan bastos");
-            break;
-        }
+        
 
         return paloQuePinta;           
     }
@@ -145,16 +132,16 @@ public class Juego
         Scanner sc = new Scanner(System.in);
         int  i = 5;
         while (i != 0) {
-            System.out.println("ESTAS SON TUS CARTAS:");
+            System.out.println("\nESTAS SON TUS CARTAS:");
 
             jugadores[0].verCartasJugador();
-            System.out.println("¿Que carta desea tirar?");
+            System.out.println("\n¿Que carta desea tirar?");
             String cartaQueQuieroTirar = sc.nextLine();
 
             Carta cartaQueNoTengo = jugadores[0].tirarCarta(cartaQueQuieroTirar);
 
             while (cartaQueNoTengo == null){
-                System.out.println("Por favor, introduce una carta que tengas"); // Imprime mensaje de error.
+                System.out.println("\nPor favor, introduce una carta que tengas"); // Imprime mensaje de error.
                 cartaQueQuieroTirar = sc.nextLine();
                 cartaQueNoTengo = jugadores[0].tirarCarta(cartaQueQuieroTirar);
             }    
@@ -171,19 +158,17 @@ public class Juego
             String jugadorQueVaGanando = baza.nombreJugadorQueVaGanandoLaBaza();
 
             jugadores[encontrarPosicionJugadorPorNombre(jugadorQueVaGanando)].addBaza(baza);
-            System.out.println("Va ganando la baza : "  + jugadorQueVaGanando.toUpperCase());
+            System.out.println("\nVa ganando la baza : "  + jugadorQueVaGanando.toUpperCase());
             i--;
         }
         int bazasGanadasHumano = jugadores[0].getNumeroBazasGanadas();      
-        System.out.println("HAS GANADO :  " + bazasGanadasHumano + " BAZAS");
+        System.out.println("\nHAS GANADO :  " + bazasGanadasHumano + " BAZAS");
 
         if(bazasGanadasHumano < 2){
-            System.out.println("ERES JULEPE");
-
+            System.out.println("\nERES JULEPE");
         }
         else{
-            System.out.println("NO ERES JULEPE");
-
+            System.out.println("\nNO ERES JULEPE");
         }
     }
 }
